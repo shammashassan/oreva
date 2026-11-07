@@ -1,0 +1,17 @@
+# ORÉVA Jewellery House
+
+> Elegance, Made Eternal.
+
+## Brand Overview
+ORÉVA is a contemporary luxury jewellery house built around elegance, individuality, and timeless design. The house presents curated jewellery collections—including necklaces, earrings, bracelets, rings, enamel bangles, and hair accessories—through sophisticated visual storytelling.
+
+## Showcase & Enquiry Model
+ORÉVA operates as a high-end digital showcase where clients discover exquisite collections and connect directly with our jewellery concierges via tailored WhatsApp enquiries.
+
+## Architecture
+- Framework: Next.js (App Router, Server Components default) + React 19
+- Styling: Tailwind CSS v4, Base UI, Shadcn UI
+- Typography: Cormorant Garamond & Manrope
+- Database: MongoDB Native Driver
+- Authentication: Better Auth
+- Motion & Animation: GSAP & modern transitions

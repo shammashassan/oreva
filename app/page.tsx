@@ -1,69 +1,100 @@
-import Image from "next/image";
+import { getHomepageCMS } from "@/lib/queries/homepage";
+import { getProducts } from "@/lib/queries/products";
+import { getCategories } from "@/lib/queries/categories";
+import { getSettings } from "@/lib/queries/settings";
+import { WishlistProvider } from "@/components/shared/wishlist-context";
+import { Header } from "@/components/shared/header";
+import { Footer } from "@/components/shared/footer";
+import { HeroSection } from "@/components/home/hero-section";
+import { CategoriesSection } from "@/components/home/categories-section";
+import { GenderSplitSection } from "@/components/home/gender-split-section";
+import { NewArrivalsSection } from "@/components/home/new-arrivals-section";
+import { EditorialBanner } from "@/components/home/editorial-banner";
+import { BestsellersSection } from "@/components/home/bestsellers-section";
+import { GiftEditSection } from "@/components/home/gift-edit-section";
+import { FeaturedProductSection } from "@/components/home/featured-product-section";
+import { BrandExperienceSection } from "@/components/home/brand-experience-section";
+import { CustomerBenefitsSection } from "@/components/home/customer-benefits-section";
 
-export default function Home() {
+export default async function HomePage() {
+  const [cms, allProducts, categories, settings] = await Promise.all([
+    getHomepageCMS(),
+    getProducts({ limit: 12 }),
+    getCategories(),
+    getSettings(),
+  ]);
+
+  const newArrivals = allProducts.filter((p) => p.isNewArrival);
+  const bestsellers = allProducts.filter((p) => p.isBestseller);
+  const featuredProduct = allProducts[0];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <WishlistProvider>
+      <div className="min-h-screen flex flex-col bg-background text-foreground">
+        <Header
+          announcementText={cms.announcement?.text}
+          whatsappNumber={settings.whatsappNumber}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+
+        <main className="flex-1">
+          {cms.sectionVisibility?.hero !== false && (
+            <HeroSection
+              title={cms.hero?.title}
+              eyebrow={cms.hero?.eyebrow}
+              tagline={cms.hero?.tagline}
+              description={cms.hero?.description}
+              ctaText={cms.hero?.ctaText}
+              ctaLink={cms.hero?.ctaLink}
+              image={cms.hero?.image}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          )}
+
+          {cms.sectionVisibility?.categories !== false && (
+            <CategoriesSection categories={categories} />
+          )}
+
+          {cms.sectionVisibility?.genderSplit !== false && (
+            <GenderSplitSection />
+          )}
+
+          {cms.sectionVisibility?.newArrivals !== false && (
+            <NewArrivalsSection
+              products={newArrivals.length > 0 ? newArrivals : allProducts.slice(0, 5)}
+            />
+          )}
+
+          {cms.sectionVisibility?.editorialBanner !== false && (
+            <EditorialBanner
+              title={cms.editorialBanner?.title}
+              subtitle={cms.editorialBanner?.subtitle}
+              image={cms.editorialBanner?.image}
+              link={cms.editorialBanner?.link}
+            />
+          )}
+
+          {cms.sectionVisibility?.bestsellers !== false && (
+            <BestsellersSection
+              products={bestsellers.length > 0 ? bestsellers : allProducts.slice(0, 4)}
+            />
+          )}
+
+          {cms.sectionVisibility?.giftEdit !== false && <GiftEditSection />}
+
+          {cms.sectionVisibility?.featuredProduct !== false && featuredProduct && (
+            <FeaturedProductSection product={featuredProduct} />
+          )}
+
+          {cms.sectionVisibility?.brandExperience !== false && (
+            <BrandExperienceSection />
+          )}
+
+          {cms.sectionVisibility?.benefits !== false && (
+            <CustomerBenefitsSection />
+          )}
+        </main>
+
+        <Footer />
+      </div>
+    </WishlistProvider>
   );
 }
