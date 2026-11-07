@@ -61,7 +61,7 @@ export function ProductCard({
     >
       {/* Image container with 4:5 aspect ratio */}
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-muted/20">
-        <Link href={`/products/${product.slug}`} className="block size-full">
+        <Link href={`/products/${product.slug}`} className="relative block size-full">
           <Image
             src={product.images[0]}
             alt={product.name}
