@@ -26,9 +26,15 @@ export async function generateMetadata(
   const col = await getCollectionBySlug(slug);
   if (!col) return { title: "Collection Not Found" };
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app";
+  const canonicalUrl = `${baseUrl}/collections/${col.slug}`;
+
   return {
-    title: col.seo?.title || `${col.name} Collection`,
+    title: col.seo?.title || `${col.name} Collection | ORÉVA`,
     description: col.seo?.description || col.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 

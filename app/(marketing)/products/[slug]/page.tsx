@@ -25,13 +25,14 @@ export async function generateMetadata(
   const product = await getProductBySlug(slug);
   if (!product) return { title: "Piece Not Found" };
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app";
+  const canonicalUrl = `${baseUrl}/products/${product.slug}`;
+
   return {
     title: product.seo?.title || `${product.name} | ORÉVA Fine Jewellery`,
     description: product.seo?.description || product.description,
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      images: product.images[0] ? [{ url: product.images[0] }] : [],
+    alternates: {
+      canonical: canonicalUrl,
     },
   };
 }

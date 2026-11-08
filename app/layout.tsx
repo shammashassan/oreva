@@ -21,7 +21,7 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app"),
   title: {
     default: "ORÉVA Jewellery House | Elegance, Made Eternal",
     template: "%s | ORÉVA Jewellery House",
@@ -45,6 +45,16 @@ export const metadata: Metadata = {
       "Contemporary accessible luxury jewellery house. Discover curated necklaces, earrings, bracelets, rings, and handcrafted adornments.",
     type: "website",
     locale: "en_US",
+    siteName: "ORÉVA Jewellery House",
+    url: process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app",
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ORÉVA Jewellery House | Elegance, Made Eternal",
+    description:
+      "Contemporary accessible luxury jewellery house. Discover curated necklaces, earrings, bracelets, rings, and handcrafted adornments.",
+    images: ["/twitter-image"],
   },
 };
 

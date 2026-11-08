@@ -25,9 +25,15 @@ export async function generateMetadata(
   const category = await getCategoryBySlug(slug);
   if (!category) return { title: "Category Not Found" };
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app";
+  const canonicalUrl = `${baseUrl}/category/${category.slug}`;
+
   return {
     title: category.seo?.title || `${category.name} | ORÉVA Jewellery`,
     description: category.seo?.description || category.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 

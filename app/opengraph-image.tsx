@@ -7,7 +7,7 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default function OgImage() {
+export default function Image() {
   return new ImageResponse(
     (
       <div
@@ -18,53 +18,118 @@ export default function OgImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#491323",
-          color: "#FFF9F1",
-          padding: "60px",
-          textAlign: "center",
+          backgroundColor: "#36101B",
+          padding: "40px",
+          position: "relative",
         }}
       >
+        {/* Double Gold Framing Border */}
         <div
           style={{
-            letterSpacing: "0.3em",
-            fontSize: "76px",
-            fontWeight: "bold",
-            color: "#FFF9F1",
-            fontFamily: "serif",
-            textTransform: "uppercase",
-            marginBottom: "16px",
-          }}
-        >
-          ORÉVA
-        </div>
-        <div
-          style={{
-            fontSize: "24px",
-            letterSpacing: "0.25em",
-            color: "#C7A66B",
-            textTransform: "uppercase",
-            marginBottom: "32px",
-          }}
-        >
-          Jewellery House
-        </div>
-        <div
-          style={{
-            width: "120px",
-            height: "2px",
-            backgroundColor: "#C7A66B",
-            marginBottom: "32px",
+            position: "absolute",
+            inset: "24px",
+            border: "1.5px solid rgba(199, 166, 107, 0.45)",
+            display: "flex",
           }}
         />
         <div
           style={{
-            fontSize: "30px",
-            fontStyle: "italic",
-            color: "#EDE1D1",
-            fontFamily: "serif",
+            position: "absolute",
+            inset: "32px",
+            border: "1px solid rgba(199, 166, 107, 0.2)",
+            display: "flex",
+          }}
+        />
+
+        {/* Content Stack */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
           }}
         >
-          Elegance, Made Eternal.
+          {/* Mayfair District Header */}
+          <div
+            style={{
+              fontSize: "14px",
+              letterSpacing: "0.45em",
+              color: "#C7A66B",
+              textTransform: "uppercase",
+              marginBottom: "20px",
+              fontFamily: "serif",
+            }}
+          >
+            MAYFAIR · LONDON
+          </div>
+
+          {/* Primary House Emblem */}
+          <div
+            style={{
+              fontSize: "92px",
+              letterSpacing: "0.22em",
+              fontWeight: 400,
+              color: "#FFF9F1",
+              fontFamily: "serif",
+              textTransform: "uppercase",
+              marginBottom: "8px",
+            }}
+          >
+            ORÉVA
+          </div>
+
+          {/* Descriptor */}
+          <div
+            style={{
+              fontSize: "20px",
+              letterSpacing: "0.35em",
+              color: "#C7A66B",
+              textTransform: "uppercase",
+              marginBottom: "28px",
+              fontFamily: "serif",
+            }}
+          >
+            JEWELLERY HOUSE
+          </div>
+
+          {/* Gold Center Divider */}
+          <div
+            style={{
+              width: "140px",
+              height: "1.5px",
+              backgroundColor: "#C7A66B",
+              marginBottom: "28px",
+              opacity: 0.7,
+            }}
+          />
+
+          {/* House Tagline */}
+          <div
+            style={{
+              fontSize: "28px",
+              fontStyle: "italic",
+              letterSpacing: "0.08em",
+              color: "#EDE1D1",
+              fontFamily: "serif",
+              marginBottom: "36px",
+            }}
+          >
+            Elegance, Made Eternal.
+          </div>
+
+          {/* Subtext */}
+          <div
+            style={{
+              fontSize: "12px",
+              letterSpacing: "0.3em",
+              color: "rgba(237, 225, 209, 0.65)",
+              textTransform: "uppercase",
+            }}
+          >
+            HAUTE JOAILLERIE · ATELIER EDITIONS
+          </div>
         </div>
       </div>
     ),

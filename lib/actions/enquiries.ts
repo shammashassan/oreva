@@ -31,8 +31,11 @@ export async function trackWhatsAppEnquiry(
 
   // Generate luxury prefilled WhatsApp message
   const number = settings.whatsappNumber.replace(/[^0-9]/g, "");
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const url = input.productUrl || `${baseUrl}/products/${validated.productId}`;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://oreva-jewellery.vercel.app";
+  let url = input.productUrl || `${baseUrl}/products/${validated.productId}`;
+  if (url.includes("localhost") || url.includes("127.0.0.1")) {
+    url = url.replace(/https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/, baseUrl);
+  }
 
   const messageLines = [
     `*${settings.brandName} — Jewellery Concierge Enquiry*`,
