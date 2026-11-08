@@ -299,7 +299,7 @@ export function ShopCatalog({ initialProducts, categories }: ShopCatalogProps) {
           )}
         </Empty>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
           {filteredProducts.map((product) => (
             <ProductCard
               key={product._id || product.slug}

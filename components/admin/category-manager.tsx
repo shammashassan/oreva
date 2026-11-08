@@ -67,7 +67,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CategoryInput>({
     resolver: zodResolver(categorySchema),
   });
@@ -79,7 +79,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)+/g, "");
-      setValue("slug", slug, { shouldValidate: true });
+      setValue("slug", slug, { shouldValidate: true, shouldDirty: true });
     }
   };
 
@@ -89,8 +89,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
       name: "",
       slug: "",
       description: "",
-      image:
-        "/images/categories/necklaces.jpg",
+      image: "/images/categories/necklaces.jpg",
       sortOrder: categories.length + 1,
       isActive: true,
     });
@@ -103,7 +102,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
       _id: cat._id,
       name: cat.name,
       slug: cat.slug,
-      description: cat.description,
+      description: cat.description ?? "",
       image: cat.image,
       sortOrder: cat.sortOrder,
       isActive: cat.isActive,
@@ -115,6 +114,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
     startTransition(async () => {
       try {
         await saveCategory(data);
+        reset(data);
         toast.add({
           title: editingCategory ? "Category Updated" : "Category Created",
           description: `${data.name} saved successfully.`,
@@ -233,7 +233,16 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
       </div>
 
       {/* Official Shadcn Modal Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) {
+            setEditingCategory(null);
+            reset();
+          }
+        }}
+      >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>
@@ -327,9 +336,13 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
               >
                 Cancel
               </Button>
-              <Button type="submit" size="sm" disabled={isPending}>
+              <Button
+                type="submit"
+                size="sm"
+                disabled={isPending || !isDirty}
+              >
                 {isPending && <Loader2 data-icon="inline-start" className="animate-spin" />}
-                <span>Save</span>
+                <span>{editingCategory ? "Save Changes" : "Create Category"}</span>
               </Button>
             </DialogFooter>
           </form>

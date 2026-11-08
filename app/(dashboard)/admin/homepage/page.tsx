@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getHomepageCMS } from "@/lib/queries/homepage";
+import { getProducts } from "@/lib/queries/products";
 import { HomepageCMSEditor } from "@/components/admin/homepage-cms-editor";
 
 export const metadata: Metadata = {
@@ -7,7 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminHomepagePage() {
-  const cms = await getHomepageCMS();
+  const [cms, products] = await Promise.all([
+    getHomepageCMS(),
+    getProducts({ limit: 100 }),
+  ]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -20,7 +24,7 @@ export default async function AdminHomepagePage() {
         </p>
       </div>
 
-      <HomepageCMSEditor initialCMS={cms} />
+      <HomepageCMSEditor initialCMS={cms} products={products} />
     </div>
   );
 }

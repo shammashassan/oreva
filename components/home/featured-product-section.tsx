@@ -19,8 +19,8 @@ export function FeaturedProductSection({
 
   return (
     <section className="py-20 sm:py-28 bg-background overflow-hidden border-t border-border/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 2xl:gap-20 items-center">
           {/* Left Column: Storytelling & Action */}
           <div className="lg:col-span-5 space-y-6 order-2 lg:order-1">
             <div className="space-y-2">

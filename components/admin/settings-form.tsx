@@ -5,7 +5,7 @@ import { Settings, settingsSchema } from "@/lib/schemas/settings";
 import { updateSettings } from "@/lib/actions/settings";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save, Check } from "lucide-react";
+import { Loader2, Save, Check, RotateCcw } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -30,17 +30,37 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isDirty },
   } = useForm<Settings>({
     resolver: zodResolver(settingsSchema),
     defaultValues: initialSettings,
   });
+
+  // Keep form in sync if initialSettings updates while form is clean
+  React.useEffect(() => {
+    if (!isDirty) {
+      reset(initialSettings);
+    }
+  }, [initialSettings, reset, isDirty]);
+
+  // Warn user on page navigation/tab close if form has unsaved edits
+  React.useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isDirty) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [isDirty]);
 
   const onSubmit: SubmitHandler<Settings> = (data) => {
     setSavedSuccess(false);
     startTransition(async () => {
       try {
         await updateSettings(data);
+        reset(data);
         setSavedSuccess(true);
         toast.add({
           title: "Settings Saved",
@@ -59,7 +79,7 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 max-w-3xl">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 w-full max-w-4xl">
       {savedSuccess && (
         <Alert>
           <Check />
@@ -192,20 +212,49 @@ export function SettingsForm({ initialSettings }: SettingsFormProps) {
         </CardContent>
       </Card>
 
-      {/* Submit Button */}
-      <div className="flex justify-end">
-        <Button
-          type="submit"
-          disabled={isPending}
-          size="lg"
-        >
-          {isPending ? (
-            <Loader2 data-icon="inline-start" className="animate-spin" />
+      {/* Submit Button & Dirty Check Status */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t">
+        <div className="flex items-center gap-2">
+          {isDirty ? (
+            <span className="flex items-center gap-2 text-xs font-medium text-amber-600 dark:text-amber-500">
+              <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
+              Unsaved changes detected
+            </span>
           ) : (
-            <Save data-icon="inline-start" />
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Check className="size-3.5 text-emerald-600 dark:text-emerald-500" />
+              All settings up to date
+            </span>
           )}
-          <span>Save Settings</span>
-        </Button>
+        </div>
+
+        <div className="flex items-center gap-2 self-end sm:self-auto">
+          {isDirty && (
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              disabled={isPending}
+              onClick={() => reset(initialSettings)}
+            >
+              <RotateCcw data-icon="inline-start" />
+              <span>Discard Changes</span>
+            </Button>
+          )}
+
+          <Button
+            type="submit"
+            disabled={isPending || !isDirty}
+            size="lg"
+          >
+            {isPending ? (
+              <Loader2 data-icon="inline-start" className="animate-spin" />
+            ) : (
+              <Save data-icon="inline-start" />
+            )}
+            <span>Save Settings</span>
+          </Button>
+        </div>
       </div>
     </form>
   );

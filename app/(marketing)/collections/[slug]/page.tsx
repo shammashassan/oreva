@@ -46,9 +46,9 @@ function CollectionDetailSkeleton() {
         <div className="h-10 w-72 bg-muted/80 rounded-xs" />
         <div className="h-4 w-96 max-w-full bg-muted/70 rounded-xs" />
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 py-12">
         <div className="h-4 w-32 bg-muted/60 mb-8 rounded-xs" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
             <div key={i} className="space-y-3">
               <div className="aspect-square bg-muted/60 rounded-xs" />
@@ -104,7 +104,7 @@ async function CollectionContent({ params }: { params: ParamsPromise }) {
       </div>
 
       {/* Collection Products Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 py-16 sm:py-24">
         <div className="flex items-center justify-between pb-8 mb-8 border-b border-border/40">
           <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium">
             Showing {products.length} {products.length === 1 ? "Piece" : "Pieces"}
@@ -121,7 +121,7 @@ async function CollectionContent({ params }: { params: ParamsPromise }) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
             {products.map((product) => (
               <ProductCard
                 key={product._id || product.slug}

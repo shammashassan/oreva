@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarRail,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { NavUser } from "@/components/dashboard/NavUser";
 import { OrevaMark } from "@/components/shared/logo";
@@ -129,6 +130,8 @@ export function DashboardSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
+      <SidebarSeparator />
+
       <SidebarContent>
         {NAV_GROUPS.map((group, groupIdx) => {
           const isLast = groupIdx === NAV_GROUPS.length - 1;
@@ -163,6 +166,8 @@ export function DashboardSidebar() {
           );
         })}
       </SidebarContent>
+
+      <SidebarSeparator />
 
       <SidebarFooter>
         <NavUser user={defaultUser} onSignOut={handleSignOut} />

@@ -11,7 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -25,11 +27,15 @@ import { cn } from "@/lib/utils";
 
 interface HeaderProps {
   announcementText?: string;
+  announcementLink?: string;
+  announcementEnabled?: boolean;
   whatsappNumber?: string;
 }
 
 export function Header({
   announcementText = "Welcome to ORÉVA — Discover timeless jewellery designed for every moment.",
+  announcementLink = "/shop",
+  announcementEnabled = true,
   whatsappNumber = "447123456789",
 }: HeaderProps) {
   const { count, setIsOpen: openWishlist } = useWishlist();
@@ -46,20 +52,26 @@ export function Header({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const showAnnouncement = announcementEnabled && Boolean(announcementText && announcementText.trim());
+
   return (
     <>
       {/* 1. Announcement Bar */}
-      <div className="bg-[#491323] text-[#FFF9F1] px-4 py-2 text-center text-[11px] font-normal tracking-[0.2em] uppercase border-b border-[#3b0f1c] select-none">
-        <div className="container mx-auto flex items-center justify-center gap-2">
-          <span>{announcementText}</span>
-          <Link
-            href="/shop"
-            className="hidden sm:inline-flex items-center gap-1 text-[#C7A66B] hover:text-[#EDE1D1] underline underline-offset-4 transition-colors font-medium text-[10px]"
-          >
-            Explore <ArrowRight className="size-3" />
-          </Link>
+      {showAnnouncement && (
+        <div className="bg-[#491323] text-[#FFF9F1] px-4 py-2 text-center text-[11px] font-normal tracking-[0.2em] uppercase border-b border-[#3b0f1c] select-none">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 flex items-center justify-center gap-2">
+            <span>{announcementText}</span>
+            {announcementLink && (
+              <Link
+                href={announcementLink}
+                className="hidden sm:inline-flex items-center gap-1 text-[#C7A66B] hover:text-[#EDE1D1] underline underline-offset-4 transition-colors font-medium text-[10px]"
+              >
+                Explore <ArrowRight className="size-3" />
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 2. Main Sticky Header */}
       <header
@@ -70,7 +82,7 @@ export function Header({
             : "bg-background border-b border-border/30"
         )}
       >
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 h-20 flex items-center justify-between">
           {/* Left Section: Mobile hamburger + Desktop Left Navigation */}
           <div className="flex items-center gap-6">
             {/* Mobile hamburger */}
@@ -103,75 +115,48 @@ export function Header({
 
                 <DropdownMenuContent
                   align="start"
-                  sideOffset={16}
-                  className="w-[430px] p-5 bg-popover/98 backdrop-blur-md border border-border/60 shadow-xl rounded-md"
+                  sideOffset={12}
+                  className="w-[400px] p-2"
                 >
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[9px] font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-1.5 px-2">
+                  <div className="grid grid-cols-2 gap-3">
+                    <DropdownMenuGroup>
+                      <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
                         Department
-                      </span>
-                      <DropdownMenuItem
-                        render={<Link href="/shop" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">All Jewellery</span>
+                      </DropdownMenuLabel>
+                      <DropdownMenuItem render={<Link href="/shop" />}>
+                        All Jewellery
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/shop?filter=new" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">New Arrivals</span>
+                      <DropdownMenuItem render={<Link href="/shop?filter=new" />}>
+                        New Arrivals
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/shop?gender=women" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Women&apos;s Collection</span>
+                      <DropdownMenuItem render={<Link href="/shop?gender=women" />}>
+                        Women&apos;s Collection
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/shop?gender=men" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Men&apos;s Selection</span>
+                      <DropdownMenuItem render={<Link href="/shop?gender=men" />}>
+                        Men&apos;s Selection
                       </DropdownMenuItem>
-                    </div>
+                    </DropdownMenuGroup>
 
-                    <div className="flex flex-col gap-1 border-l border-border/40 pl-5">
-                      <span className="text-[9px] font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-1.5 px-2">
+                    <DropdownMenuGroup className="border-l border-border/40 pl-3">
+                      <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
                         Categories
-                      </span>
-                      <DropdownMenuItem
-                        render={<Link href="/category/necklaces" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Necklaces</span>
+                      </DropdownMenuLabel>
+                      <DropdownMenuItem render={<Link href="/category/necklaces" />}>
+                        Necklaces
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/category/earrings" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Earrings</span>
+                      <DropdownMenuItem render={<Link href="/category/earrings" />}>
+                        Earrings
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/category/bracelets" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Bracelets & Cuffs</span>
+                      <DropdownMenuItem render={<Link href="/category/bracelets" />}>
+                        Bracelets &amp; Cuffs
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/category/rings" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Rings & Solitaires</span>
+                      <DropdownMenuItem render={<Link href="/category/rings" />}>
+                        Rings &amp; Solitaires
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        render={<Link href="/category/enamel-bangles" />}
-                        className="cursor-pointer py-1.5 px-2 rounded-sm text-foreground hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="font-serif text-sm">Enamel Bangles</span>
+                      <DropdownMenuItem render={<Link href="/category/enamel-bangles" />}>
+                        Enamel Bangles
                       </DropdownMenuItem>
-                    </div>
+                    </DropdownMenuGroup>
                   </div>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -187,12 +172,12 @@ export function Header({
           </div>
 
           {/* Centre Brand Wordmark Logo — Locked Exactly at Center */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center text-center pointer-events-auto">
+          <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center text-center pointer-events-auto max-w-[50%]">
             <Link href="/" className="group flex flex-col items-center">
-              <span className="font-serif text-2xl sm:text-3xl tracking-[0.28em] text-foreground uppercase font-medium leading-tight">
+              <span className="font-serif text-xl sm:text-3xl tracking-[0.24em] sm:tracking-[0.28em] text-foreground uppercase font-medium leading-tight truncate">
                 ORÉVA
               </span>
-              <span className="text-[8px] tracking-[0.35em] text-muted-foreground uppercase mt-0.5 font-light">
+              <span className="text-[7.5px] sm:text-[8px] tracking-[0.3em] sm:tracking-[0.35em] text-muted-foreground uppercase mt-0.5 font-light">
                 Jewellery House
               </span>
             </Link>
@@ -242,12 +227,12 @@ export function Header({
               variant="outline"
               size="sm"
               nativeButton={false}
+              className="hidden md:inline-flex items-center gap-1.5 h-8 text-[10px] tracking-[0.16em] uppercase font-medium"
               render={
                 <a
                   href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-1.5 h-8 text-[10px] tracking-[0.16em] uppercase font-medium"
                 />
               }
             >

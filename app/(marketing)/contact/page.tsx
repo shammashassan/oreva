@@ -21,7 +21,7 @@ export default async function ContactPage() {
 
   return (
     <div className="py-16 sm:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
           <span className="text-[10px] tracking-[0.35em] uppercase text-[#C7A66B] font-medium block">
             PERSONALIZED ASSISTANCE
@@ -36,7 +36,7 @@ export default async function ContactPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 2xl:gap-16 items-start max-w-5xl 2xl:max-w-6xl mx-auto">
           {/* Direct WhatsApp Spotlight Card */}
           <Card className="lg:col-span-5 p-8 sm:p-10 rounded-xl bg-[#491323] text-[#FFF9F1] space-y-6 shadow-xl border-none">
             <div className="space-y-2">

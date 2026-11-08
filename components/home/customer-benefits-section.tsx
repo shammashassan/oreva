@@ -9,7 +9,7 @@ export function CustomerBenefitsSection() {
 
   return (
     <section className="py-14 bg-background border-t border-border/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-border/40">
           {CUSTOMER_BENEFITS.map((benefit, idx) => {
             const Icon = icons[idx % icons.length];

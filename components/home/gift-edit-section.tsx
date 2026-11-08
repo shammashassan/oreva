@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 export function GiftEditSection() {
   return (
     <section className="py-20 sm:py-24 bg-[#FAF6F0] border-y border-border/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="text-center max-w-xl mx-auto mb-14 space-y-2">
           <span className="text-[10px] tracking-[0.3em] uppercase text-[#C7A66B] font-medium block">
             CURATED CELEBRATIONS
@@ -22,7 +22,7 @@ export function GiftEditSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
           {GIFT_EDIT_ITEMS.map((item) => (
             <Link
               key={item.title}

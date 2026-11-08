@@ -29,7 +29,7 @@ export function NewArrivalsSection({ products }: NewArrivalsSectionProps) {
 
   return (
     <section className="py-20 sm:py-24 bg-background border-t border-border/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
             <span className="text-[10px] tracking-[0.3em] uppercase text-[#C7A66B] font-medium block mb-2">

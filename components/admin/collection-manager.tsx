@@ -70,7 +70,7 @@ export function CollectionManager({
     handleSubmit,
     reset,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CollectionInput>({
     resolver: zodResolver(collectionSchema),
   });
@@ -82,7 +82,7 @@ export function CollectionManager({
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)+/g, "");
-      setValue("slug", slug, { shouldValidate: true });
+      setValue("slug", slug, { shouldValidate: true, shouldDirty: true });
     }
   };
 
@@ -92,10 +92,8 @@ export function CollectionManager({
       name: "",
       slug: "",
       description: "",
-      image:
-        "/images/collections/royal-burgundy.jpg",
-      bannerImage:
-        "/images/collections/royal-burgundy.jpg",
+      image: "/images/collections/royal-burgundy.jpg",
+      bannerImage: "/images/collections/royal-burgundy.jpg",
       productIds: [],
       isFeatured: true,
       isActive: true,
@@ -110,7 +108,7 @@ export function CollectionManager({
       _id: col._id,
       name: col.name,
       slug: col.slug,
-      description: col.description,
+      description: col.description ?? "",
       image: col.image,
       bannerImage: col.bannerImage || col.image,
       productIds: col.productIds || [],
@@ -125,6 +123,7 @@ export function CollectionManager({
     startTransition(async () => {
       try {
         await saveCollection(data);
+        reset(data);
         toast.add({
           title: editingCollection ? "Collection Updated" : "Collection Created",
           description: `${data.name} saved successfully.`,
@@ -246,7 +245,16 @@ export function CollectionManager({
       </div>
 
       {/* Official Shadcn Modal Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) {
+            setEditingCollection(null);
+            reset();
+          }
+        }}
+      >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>
@@ -378,9 +386,13 @@ export function CollectionManager({
               >
                 Cancel
               </Button>
-              <Button type="submit" size="sm" disabled={isPending}>
+              <Button
+                type="submit"
+                size="sm"
+                disabled={isPending || !isDirty}
+              >
                 {isPending && <Loader2 data-icon="inline-start" className="animate-spin" />}
-                <span>Save</span>
+                <span>{editingCollection ? "Save Changes" : "Create Collection"}</span>
               </Button>
             </DialogFooter>
           </form>

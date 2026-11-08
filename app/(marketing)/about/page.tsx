@@ -39,7 +39,8 @@ export default function AboutPage() {
       </div>
 
       {/* Narrative Section 1 */}
-      <section className="py-20 sm:py-28 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+      <section className="w-full py-20 sm:py-28">
+        <div className="max-w-5xl 2xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 space-y-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-5">
             <span className="text-[10px] tracking-[0.3em] uppercase text-[#C7A66B] font-semibold block">
@@ -181,6 +182,7 @@ export default function AboutPage() {
               <ArrowRight className="size-3.5" />
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </div>

@@ -84,13 +84,15 @@ export function ProductFormDialog({
     handleSubmit,
     setValue,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ProductInput>({
     resolver: zodResolver(productSchema),
     defaultValues,
   });
 
   React.useEffect(() => {
+    if (!isOpen) return;
+
     if (initialData) {
       const matchedCat = categories.find(
         (c) =>
@@ -100,7 +102,25 @@ export function ProductFormDialog({
             initialData.categoryId.toLowerCase()
       );
       const resolvedCatId = matchedCat?._id || initialData.categoryId;
-      reset({ ...initialData, categoryId: resolvedCatId });
+      reset({
+        _id: initialData._id,
+        name: initialData.name,
+        slug: initialData.slug,
+        sku: initialData.sku,
+        description: initialData.description,
+        price: initialData.price,
+        compareAtPrice: initialData.compareAtPrice ?? null,
+        images: initialData.images || [],
+        categoryId: resolvedCatId,
+        collectionIds: initialData.collectionIds || [],
+        gender: initialData.gender || "women",
+        variants: initialData.variants || [],
+        isFeatured: initialData.isFeatured ?? false,
+        isBestseller: initialData.isBestseller ?? false,
+        isNewArrival: initialData.isNewArrival ?? false,
+        isActive: initialData.isActive ?? true,
+        sortOrder: initialData.sortOrder ?? 0,
+      });
     } else {
       reset({
         name: "",
@@ -121,7 +141,7 @@ export function ProductFormDialog({
         sortOrder: 0,
       });
     }
-  }, [initialData, categories, reset]);
+  }, [initialData, categories, reset, isOpen]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -130,7 +150,7 @@ export function ProductFormDialog({
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)+/g, "");
-      setValue("slug", generated, { shouldValidate: true });
+      setValue("slug", generated, { shouldValidate: true, shouldDirty: true });
     }
   };
 
@@ -139,6 +159,7 @@ export function ProductFormDialog({
     startTransition(async () => {
       try {
         await saveProduct(data);
+        reset(data);
         toast.add({
           title: initialData ? "Piece Updated" : "Piece Created",
           description: `${data.name} has been catalogued successfully.`,
@@ -396,9 +417,13 @@ export function ProductFormDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" size="sm" disabled={isPending}>
+            <Button
+              type="submit"
+              size="sm"
+              disabled={isPending || !isDirty}
+            >
               {isPending && <Loader2 data-icon="inline-start" className="animate-spin" />}
-              <span>{initialData ? "Update Piece" : "Save Piece"}</span>
+              <span>{initialData ? "Save Changes" : "Save Piece"}</span>
             </Button>
           </DialogFooter>
         </form>

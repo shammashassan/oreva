@@ -14,7 +14,7 @@ function ShopGridSkeleton() {
   return (
     <div className="space-y-8 animate-pulse">
       <div className="h-10 w-full bg-muted/60 rounded-xs" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
           <div
             key={i}
@@ -45,7 +45,7 @@ async function ShopContent() {
 export default function ShopPage() {
   return (
     <div className="py-12 sm:py-16 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         {/* Instant Static Header Shell */}
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <span className="text-[10px] tracking-[0.35em] uppercase text-[#C7A66B] font-medium block">

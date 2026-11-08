@@ -37,7 +37,7 @@ export function BrandExperienceSection() {
       {/* Subtle gold foil particle accent in background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(199,166,107,0.15),transparent_70%)]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative z-10">
         {/* Centered champagne/ivory panel */}
         <div className="max-w-4xl mx-auto bg-[#FFF9F1] text-[#241B1B] p-8 sm:p-16 rounded-xs shadow-2xl border border-[#EDE1D1]">
           <div className="text-center space-y-3 mb-12">

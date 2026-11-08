@@ -26,13 +26,22 @@ export default async function HomePage() {
 
   const newArrivals = allProducts.filter((p) => p.isNewArrival);
   const bestsellers = allProducts.filter((p) => p.isBestseller);
-  const featuredProduct = allProducts[0];
+  const featuredProduct =
+    (cms.featuredProductId
+      ? allProducts.find((p) => String(p._id) === cms.featuredProductId)
+      : null) || allProducts[0];
+
+  const isAnnouncementEnabled =
+    cms.announcement?.enabled !== false &&
+    cms.sectionVisibility?.announcement !== false;
 
   return (
     <WishlistProvider>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <Header
+          announcementEnabled={isAnnouncementEnabled}
           announcementText={cms.announcement?.text}
+          announcementLink={cms.announcement?.link}
           whatsappNumber={settings.whatsappNumber}
         />
 
@@ -54,7 +63,7 @@ export default async function HomePage() {
           )}
 
           {cms.sectionVisibility?.genderSplit !== false && (
-            <GenderSplitSection />
+            <GenderSplitSection banners={cms.genderBanners} />
           )}
 
           {cms.sectionVisibility?.newArrivals !== false && (

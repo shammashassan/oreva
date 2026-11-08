@@ -45,7 +45,7 @@ function CategoryDetailSkeleton() {
         <div className="h-10 w-64 bg-muted/70 mx-auto rounded-xs" />
         <div className="h-4 w-96 max-w-full bg-muted/50 mx-auto rounded-xs" />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8 pt-6">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
           <div key={i} className="space-y-3">
             <div className="aspect-square bg-muted/60 rounded-xs" />
@@ -96,7 +96,7 @@ async function CategoryContent({ params }: { params: ParamsPromise }) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
           {products.map((product) => (
             <ProductCard
               key={product._id || product.slug}
@@ -112,7 +112,7 @@ async function CategoryContent({ params }: { params: ParamsPromise }) {
 export default function CategoryDetailPage(props: CategoryPageProps) {
   return (
     <div className="py-14 sm:py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <Suspense fallback={<CategoryDetailSkeleton />}>
           <CategoryContent params={props.params} />
         </Suspense>

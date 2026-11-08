@@ -14,11 +14,17 @@ export default async function MarketingLayout({
     getHomepageCMS(),
   ]);
 
+  const isAnnouncementEnabled =
+    cms.announcement?.enabled !== false &&
+    cms.sectionVisibility?.announcement !== false;
+
   return (
     <WishlistProvider>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <Header
+          announcementEnabled={isAnnouncementEnabled}
           announcementText={cms.announcement?.text}
+          announcementLink={cms.announcement?.link}
           whatsappNumber={settings.whatsappNumber}
         />
         <main className="flex-1">{children}</main>

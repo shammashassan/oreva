@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="py-16 sm:py-24 bg-background">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 space-y-8">
         <div className="space-y-2 border-b border-border/50 pb-6">
           <span className="text-[10px] tracking-[0.3em] uppercase text-[#C7A66B] font-medium block">
             HOUSE POLICIES

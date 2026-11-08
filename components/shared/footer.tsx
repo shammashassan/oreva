@@ -24,7 +24,7 @@ export function Footer() {
 
   return (
     <footer className="bg-[#241B1B] text-[#EDE1D1] pt-16 pb-8 border-t border-[#382b2b] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-14 border-b border-[#382b2b]">
           {/* Brand Column (4 cols) */}
           <div className="lg:col-span-4 space-y-4 min-w-0">

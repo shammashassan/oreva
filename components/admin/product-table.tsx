@@ -330,7 +330,10 @@ export function ProductTable({
 
       <ProductFormDialog
         isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
+        onClose={() => {
+          setIsDialogOpen(false);
+          setEditingProduct(null);
+        }}
         categories={categories}
         initialData={editingProduct}
       />

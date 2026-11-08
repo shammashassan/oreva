@@ -64,12 +64,12 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 2xl:gap-20 items-start">
       {/* Left: Product Images Gallery */}
       <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
         {/* Thumbnails */}
         {images.length > 1 && (
-          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:max-h-[640px] shrink-0">
+          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto sm:max-h-[640px] 2xl:sm:max-h-[760px] shrink-0">
             {images.map((img, idx) => (
               <button
                 key={idx}

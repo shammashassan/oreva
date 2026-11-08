@@ -7,11 +7,23 @@ import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
-export function GenderSplitSection() {
-  const panels = [
+interface GenderBanner {
+  gender: "women" | "men" | string;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
+interface GenderSplitSectionProps {
+  banners?: GenderBanner[];
+}
+
+export function GenderSplitSection({ banners }: GenderSplitSectionProps) {
+  const defaultPanels: GenderBanner[] = [
     {
       gender: "WOMEN",
-      tagline: "The Feminine Radiance",
+      title: "The Feminine Radiance",
       description:
         "Cascading diamond drops, sculpted baroque pearls, and fluid gold cuffs crafted for effortless modern grace.",
       image: "/images/editorial/gender-women.jpg",
@@ -19,7 +31,7 @@ export function GenderSplitSection() {
     },
     {
       gender: "MEN",
-      tagline: "The Masculine Architect",
+      title: "The Masculine Architect",
       description:
         "Substantial gadroon cuffs, Roman signet rings, and understated gold chains defined by weight and integrity.",
       image: "/images/editorial/gender-men.jpg",
@@ -27,13 +39,15 @@ export function GenderSplitSection() {
     },
   ];
 
+  const panels = banners && banners.length >= 2 ? banners : defaultPanels;
+
   return (
     <section className="w-full bg-[#181213] text-[#FFF9F1] overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-[#382b2b]">
         {panels.map((panel) => (
           <div
             key={panel.gender}
-            className="group relative min-h-[500px] sm:min-h-[620px] flex flex-col justify-end p-8 sm:p-14 overflow-hidden"
+            className="group relative min-h-[500px] sm:min-h-[620px] flex flex-col justify-end p-8 sm:p-14 2xl:p-20 overflow-hidden"
           >
             {/* Background image with hover zoom */}
             <Image
@@ -51,7 +65,7 @@ export function GenderSplitSection() {
                 {panel.gender}
               </span>
               <h3 className="font-serif text-3xl sm:text-4xl text-[#FFF9F1] tracking-wide font-light">
-                {panel.tagline}
+                {panel.title}
               </h3>
               <p className="text-xs sm:text-sm text-[#A89B93] leading-relaxed font-light">
                 {panel.description}

@@ -74,13 +74,13 @@ export function HeroSection({
       {/* Hero Typography & Content */}
       <div
         ref={textRef}
-        className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 py-20 text-center flex flex-col items-center"
+        className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 2xl:px-12 py-20 text-center flex flex-col items-center"
       >
         <span className="animate-hero-item inline-block text-[10px] sm:text-[11px] tracking-[0.35em] text-[#C7A66B] uppercase font-medium mb-4">
           {eyebrow}
         </span>
 
-        <h1 className="animate-hero-item font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#FFF9F1] tracking-[0.18em] uppercase font-light leading-none mb-3">
+        <h1 className="animate-hero-item font-serif text-[clamp(2.75rem,5.5vw+1rem,6.5rem)] text-[#FFF9F1] tracking-[0.18em] uppercase font-light leading-none mb-3">
           {title}
         </h1>
 

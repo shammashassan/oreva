@@ -86,7 +86,7 @@ async function ProductContent({ params }: { params: ParamsPromise }) {
               You May Also Admire
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 2xl:gap-8">
             {related.map((item) => (
               <ProductCard
                 key={item._id || item.slug}
@@ -103,7 +103,7 @@ async function ProductContent({ params }: { params: ParamsPromise }) {
 export default function ProductDetailPage(props: ProductPageProps) {
   return (
     <div className="py-12 sm:py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <Suspense fallback={<ProductDetailSkeleton />}>
           <ProductContent params={props.params} />
         </Suspense>
